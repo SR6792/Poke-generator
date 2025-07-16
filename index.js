@@ -35,25 +35,34 @@ let poke;
 async function fetchData(){
     try{
         poke=document.getElementById("poke").value.toLowerCase();//takes input in lower case;
-        poke.addEventListener("type",autos);//autocomplete suggestion
         const response=await fetch(`https://pokeapi.co/api/v2/pokemon/${poke}`);
         if(!response.ok){//checks if we got the response or for error
             throw new Error("Cant find the pokemon u asked for");
         }
         const data= await response.json();
-        const sprites=data.sprites.front_default;
+        const sprites=data.sprites.front_default;//this is the img
         img.src=sprites;
     }
     catch(error){//checks for error
         console.error(error);
     }
 }
+
 const btn=document.querySelector(".btn");
 btn.addEventListener("click",fetchData);
 
+
 //autocomplete function
-function autos(poke){
-    for(let i=0;i<poke.length;i++){
-        
+function autos(event){
+    let x=event.target.value;
+    let a=pokemonList.filter(item=>item.includes(x));
+    const inp=document.querySelector(".suggestion");
+    inp.textContent="";
+    for(let i=0;i<a.length;i++)
+    {
+        const div=document.createElement("div");
+        div.textContent=a[i];
+        inp.appendChild(div);
     }
 }
+const inp=document.querySelector(".suggestion");
