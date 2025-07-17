@@ -31,11 +31,11 @@ const pokemonList = [
 ];
 //list opf pokemons for autocomplete
 const img=document.querySelector(".sprite");
-let poke;
+const pokeInput=document.getElementById("poke")
 async function fetchData(){
     try{
-        poke=document.getElementById("poke").value.toLowerCase();//takes input in lower case;
-        const response=await fetch(`https://pokeapi.co/api/v2/pokemon/${poke}`);
+        const pokeName=pokeInput.value.toLowerCase();//takes input in lower case;
+        const response=await fetch(`https://pokeapi.co/api/v2/pokemon/${pokeName}`);
         if(!response.ok){//checks if we got the response or for error
             throw new Error("Cant find the pokemon u asked for");
         }
@@ -47,7 +47,7 @@ async function fetchData(){
         console.error(error);
     }
 }
-
+poke.addEventListener("input",autos);
 const btn=document.querySelector(".btn");
 btn.addEventListener("click",fetchData);
 
@@ -63,6 +63,15 @@ function autos(event){
         const div=document.createElement("div");
         div.textContent=a[i];
         inp.appendChild(div);
+        div.addEventListener("click",()=>{
+            pokeInput.value=a[i];
+            inp.innerHTML="";//clear auto suggestion after u click one
+        })
     }
+    inp.style.cssText="display: flex; margin: 0 auto; text-align: center;flex-direction:column;padding:10px";
+    inp.addEventListener("keydown",()=>{
+        div.style.cssText="border:2px solid black;";
+    });
 }
 const inp=document.querySelector(".suggestion");
+
