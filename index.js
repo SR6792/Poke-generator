@@ -31,7 +31,10 @@ const pokemonList = [
 ];
 //list opf pokemons for autocomplete
 const img=document.querySelector(".sprite");
-const pokeInput=document.getElementById("poke")
+const pokeInput=document.getElementById("poke");
+const names=document.querySelector(".name");
+const type=document.querySelector(".type");
+const detail=document.querySelector(".details");
 async function fetchData(){
     try{
         const pokeName=pokeInput.value.toLowerCase();//takes input in lower case;
@@ -42,6 +45,22 @@ async function fetchData(){
         const data= await response.json();
         const sprites=data.sprites.front_default;//this is the img
         img.src=sprites;
+        let x=data.name;
+        const cname=x[0].toUpperCase() + x.slice(1);
+        names.innerHTML=`<h1>Name:${cname}</h1>`;
+        type.innerHTML=`<h1>Type:${data.types.map(t=>t.type.name)}</h1>`;
+        let movesL=[];
+        for(let i=0;i<4;i++)
+        {
+            if(data.moves[i]&&data.moves[i].move&&data.moves[i].move.name)
+            {
+                movesL.push(data.moves[i].move.name);//seperate with comma
+            }
+
+        }
+
+        let moves=movesL.join(',');//last space and comma
+        detail.innerHTML=`<h1>Moves:${moves}</h1>`;
     }
     catch(error){//checks for error
         console.error(error);
@@ -50,8 +69,16 @@ async function fetchData(){
 poke.addEventListener("input",autos);
 const btn=document.querySelector(".btn");
 btn.addEventListener("click",fetchData);
-
-
+function hover(){
+    btn.style.backgroundColor="black";
+    btn.style.color="white";
+}
+function unhover(){
+    btn.style.backgroundColor="red";
+    btn.style.color="black";
+}
+btn.addEventListener("mouseenter",hover);
+btn.addEventListener("mouseleave",unhover);
 //autocomplete function
 function autos(event){
     let x=event.target.value;
@@ -69,9 +96,10 @@ function autos(event){
         })
     }
     inp.style.cssText="display: flex; margin: 0 auto; text-align: center;flex-direction:column;padding:10px";
-    inp.addEventListener("keydown",()=>{
-        div.style.cssText="border:2px solid black;";
-    });
 }
 const inp=document.querySelector(".suggestion");
-
+poke.addEventListener("keydown",function(event){//to check if enter key is pressed
+    if(event.key=='Enter'){
+        fetchData();
+    }
+});

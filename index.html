@@ -3,16 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Poke-Generator</title>
     <script src="index.js" defer></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="divs" style="display: flex; flex-direction: column; height:50%; width:50%; margin:0 auto;">
-        <img src="420px-International_Pokémon_logo.svg.png">
-        <input type="text" placeholder="Enter pokemon name" id="poke" style="display: flex; margin: 0 auto; text-align: center;">
-        <div class="suggestion"></div>
-        <button class="btn" style="display: flex; margin: 0 auto;">Generate pokemon</button>
-        <img class="sprite" src="" style="margin:0 auto;">
+    <div class="divs" style="background:transparent; display: flex; flex-direction: column; height:50%; width:50%; margin:0 auto; align-items: center;">
+        <h1>Poke Generator</h1>
+        <div class="pokedex">
+            <div class="upper">
+                <div class="red"></div>
+                <div class="yellow"></div>
+                <div class="green"></div>
+            </div>
+            <div class="mainbody">
+                <div class="imgs">
+                    <img class="sprite" src="" style="margin:0 auto;" alt="s">
+                </div>
+                <div class="content">
+                    <div class="content2">
+                        <div class="name"><h1>Name:</h1></div>
+                        <div class="type"><h1>Type:</h1></div>
+                    </div>
+                    <div class="details"><h1>Moves:</h1></div>
+                </div>
+                <input type="text" placeholder="Enter pokemon name" id="poke" style="background:white;display: flex; margin: 0 auto; text-align: center;">
+                <div class="suggestion"></div>
+                <button class="btn" style="display: flex; margin: 0 auto; background: red;">Generate pokemon</button>        
+            </div>
+        </div>
     </div>
 </body>
 </html>
